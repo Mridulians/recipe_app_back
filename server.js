@@ -3,10 +3,16 @@ import mongoose from "mongoose";
 import UserRouter from "./routes/user.js";
 import recipeRouter from "./routes/recipe.js";
 import cors from "cors";
-// import bodyParser from "express";
+import 'dotenv/config'
+const PORT = process.env.PORT || 3000
+
+ const MONGOURL = process.env.DB_URL
+
 
 const app = express();
 app.use(express.json());
+
+
 
 app.use(cors({
     origin: true, 
@@ -17,17 +23,16 @@ app.use(cors({
 
 
 
-
-
 // UserRouter
 app.use("/api", UserRouter);
 
 // recipe router
 app.use("/api", recipeRouter);
 
+
 mongoose
   .connect(
-    "mongodb+srv://gmridul898:S0FnNuZ4MiVnzpXo@cluster0.guruze1.mongodb.net/",
+       MONGOURL,
     {
       dbName: "MERN_RECIPE",
     }
@@ -39,7 +44,8 @@ mongoose
 //   res.send("Hello World from MRIDUL");
 // });
 
-app.listen(3000, (req, res) => {
+
+app.listen(PORT, (req, res) => {
   console.log("server listing on port 3000");
 });
 
